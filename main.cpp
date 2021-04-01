@@ -13,6 +13,7 @@ select an option
 
 #include<iostream>
 #include<cstring>
+#include<fstream>
 using namespace std;
 
 class BankingSystem
@@ -29,6 +30,8 @@ public:
  int id;
  int Balance;
 
+ 
+ 
  //Parametrized Constructors
  BankingSystem(string F="none",string L="none",int key=0,float deposit=0.0,float withdrawl=0.0 )
  {
@@ -44,6 +47,7 @@ public:
      accountNumber=accountNumber+1;
      cout<<"Account number : "<<accountNumber<<endl;
  }
+
  void setName(string F,string L)
  {
     FirstName=F;
@@ -54,32 +58,89 @@ public:
  {  id = rand() % 80 + 19855149; 
     Id=id;
  }
+
  void setKey(int key)
  {
      Key=key;
  }
+
  void setDeposit(float deposit)
  {
      Deposit=deposit;
  }
+
  void setWithdrawl(float withdrawl)
  {
-     if(withdrawl>Deposit)
+    if(withdrawl>Deposit)
          cout<<"You dont enough funds!!";
     else
-     Withdrawl=withdrawl;
+        Withdrawl=withdrawl;
  }
+
  float showBalance()
  {
-     return -Withdrawl+Deposit;
+    return -Withdrawl+Deposit;
  }
 
 //  Accessors
  int getId() 
  {
-     return Id;
+    return  Id;
  }
+
+ string getFname()
+ {
+    return FirstName;
+ }
+
+  string getLname()
+ {
+    return LastName;
+ }
+
+float getDeposit()
+{
+    return Deposit;
+}
+
+float getWithdrawl()
+{
+    return Withdrawl;
+}
+
+float getBalance(){
+    return getDeposit()-getWithdrawl();
+}
+
+void writeData()
+{
+ ofstream ofs("AccountHolders.txt",ios::app);
+    ofs<<"Account number : "<<accountNumber<<endl;
+    ofs<<"Account Id:" <<getId()<<endl;
+    ofs<<"Äccount holder's First Name : "<<getFname()<<endl;
+    ofs<<"Account holder's Last Name : "<<getLname()<<endl;
+    ofs<<"Deposited Money : "<<getDeposit()<<endl;
+    ofs<<"Withdrawn Money : "<<getWithdrawl()<<endl;
+    ofs<<"Current Balance in your account : "<<getBalance()<<endl;
+    ofs<<endl;
+    ofs.close();
+}
+void readData()
+{   ifstream ifs("AccountHolders.txt");
+    string fileContent;
+
+    // ifs>>"First Name : ">>getFname();
+    while(getline(ifs,fileContent))
+    {
+        cout<<fileContent<<endl;
+    }
+    ifs.close();
+}
+
+ 
 };
+ 
+ 
 void Layout()
 {
    cout<<"****Welcome to Banking System*****";
@@ -87,7 +148,7 @@ void Layout()
    cout<<endl;
    cout<<"1.Open an account"<<endl;
    cout<<"2.Balance Enquiry"<<endl;
-   cout<<"3.Log history "<<endl;
+   cout<<"3.Log Account details"<<endl;
    cout<<"4.Deposit money into your account"<<endl;
    cout<<"5.Withdraw money from the account"<<endl;
    cout<<"6.Close your account"<<endl;
@@ -113,12 +174,12 @@ int main()
     {
         switch(option)
         {
-            case 1: cout<<"Opening an account";
+            case 1: cout<<"Opening an account"<<endl;
                     a.setAccountNumber();
                     cout<<"Enter Your First Name : ";
-                    getline(cin,F);
+                    cin>>F;
                     cout<<"Enter your Last Name : ";
-                    getline(cin,L);
+                    cin>>L;
                     a.setName(F,L);
                     a.setId();
                     cout<<"Remember your Id and password to access your account later"<<endl;
@@ -126,6 +187,7 @@ int main()
                     cout<<"Create your account password : ";
                     cin>>key;
                     a.setKey(key);
+                     
                     cout<<"Account created successfully";
                     cout<<endl;
                     cout<<endl;
@@ -136,12 +198,15 @@ int main()
                     cout<<endl;
                     cout<<endl;
                     break;
-            case 3: cout<<"Logging history "<<endl;
+            case 3: cout<<"Logging Account Details "<<endl;
+                    a.getId();
+                    a.readData();
                     break;
             case 4:
                     cout<<"Enter the amount you want to deposit : ";
                     cin>>deposit;
                     a.setDeposit(deposit);
+                    a.writeData();
                     cout<<"Account deposited successfully";
                     cout<<endl;
                     cout<<endl;
@@ -161,7 +226,7 @@ int main()
             default:cout<<"Something went wrong";
 
         }
-        Layout();
+        // Layout();
         cout<<"Select an option : ";
         cin>>option;
     }
