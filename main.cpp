@@ -80,17 +80,8 @@ public:
      return Id;
  }
 };
-
-int main()
+void Layout()
 {
-
-    int key;
-    string F,L;
-    int option;
-    float deposit,withdrawl;
-
-    BankingSystem a;
-
    cout<<"****Welcome to Banking System*****";
    cout<<endl;
    cout<<endl;
@@ -102,8 +93,22 @@ int main()
    cout<<"6.Close your account"<<endl;
    cout<<"7.Exit"<<endl;
    cout<<endl;
-   cout<<"Select an option : ";
-   cin>>option;
+}
+
+int main()
+{
+   
+    int key;
+    string F,L;
+    int option;
+    float deposit,withdrawl;
+
+    BankingSystem a;
+
+    Layout();
+    cout<<"Select an option : ";
+    cin>>option;
+
     while(option!=7)
     {
         switch(option)
@@ -156,9 +161,12 @@ int main()
             default:cout<<"Something went wrong";
 
         }
-    cout<<"Select an option : ";
-    cin>>option;
+        Layout();
+        cout<<"Select an option : ";
+        cin>>option;
     }
+    cout<<"Thank you, for banking with us!"<<endl;
+    cout<<"Have a nice day";
 
     return 0;
 }
