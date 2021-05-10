@@ -1,1 +1,8 @@
- 
+ Account number : 1
+Account Id:19855216
+Äccount holder's First Name : Siddhu
+Account holder's Last Name : rao
+Deposited Money : 50
+Withdrawn Money : 0
+Current Balance in your account : 50
+
